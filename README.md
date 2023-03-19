@@ -81,7 +81,7 @@ npm install --save-exact @babel/core@7.21.3 @babel/node@7.20.7 @babel/preset-env
 - ```@babel/preset-env``` is a smart preset that allows you to use the latest JavaScript without needing to micromanage which syntax transforms (and optionally, browser polyfills) are needed by your target environment(s). This both makes your life easier and JavaScript bundles smaller!
 
 
-## Config babel
+### Config babel
 - Tạo file .babelrc
 ```bash
 {
@@ -120,7 +120,47 @@ export default configViewEngine;
 - Ví dụ: ```import configViewEngine from "./viewEngine.js";```
 
 
-## 4. Run server
+### Add script to package.json
+- Open package.json file and add the following script so that we can use ```import``` syntax in our code.
+```bash
+"scripts": {
+  "type": "module"
+}
+```
+
+## 3.5 Install dotenv
+```bash
+npm install --save-exact dotenv@16.0.3
+```
+
+- ```dotenv``` dùng để lưu các biến môi trường. Chúng ta có thể lấy các biến môi trường bằng cách sử dụng ```process.env```. Ví dụ: ```process.env.DB_HOST```, ```process.env.DB_USER```, ...
+
+### Tạo file .env
+```bash
+PORT = 8080
+```
+Rồi sử dụng biến môi trường trong file server.js
+```bash
+import dotenv from 'dotenv'
+dotenv.config()
+const port = process.env.PORT || 8080;
+```
+
+### Hide .env file
+- Tạo file .gitignore
+```bash
+node_modules
+.env
+```
+
+### Add static folder
+```bash
+app.use(express.static('public'));
+```
+- This will make all the files in public/ available to the world outside of our application.
+
+
+# 4. Run server
 ### Render HTML page
 ```bash
 app.get('/', (req, res) => {
